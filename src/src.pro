@@ -6,22 +6,19 @@ TEMPLATE = lib
 TARGET = kdreports
 CONFIG(debug, debug|release):!unix:TARGET = $${TARGET}d
 
-WARN_IF_NOT_FOUND = 1
-include($${TOP_SOURCE_DIR}/kdchart.pri)
+#WARN_IF_NOT_FOUND = 1
+include(../kdchart.pri)
 
-# Workaround for visual studio integration
-DESTDIR = $${TOP_BUILD_DIR}/lib
-win32:DLLDESTDIR = $${TOP_BUILD_DIR}/bin
-QT += xml
-
-contains( $$list($$[QT_VERSION]), 5.* ): QT += widgets printsupport
+QT += xml widgets printsupport
 
 include(../variables.pri)
 
-FORMS = KDReports/previewdialogbase.ui \
+FORMS += KDReports/previewdialogbase.ui \
     KDReports/tablebreakingdialogbase.ui
-RESOURCES = $${TOP_SOURCE_DIR}/pics/pics.qrc
-PUBLICHEADERS = KDReports/KDReportsReport.h \
+
+RESOURCES = ../pics/pics.qrc
+
+HEADERS += KDReports/KDReportsReport.h \
     KDReports/KDReportsElement.h \
     KDReports/KDReportsChartElement.h \
     KDReports/KDReportsTextElement.h \
@@ -44,9 +41,8 @@ PUBLICHEADERS = KDReports/KDReportsReport.h \
     KDReports/KDReportsTableBreakingSettingsDialog.h \
     KDReports/KDReportsMainTable.h \
     KDReports/KDReportsXmlHelper.h \
-    KDReports/KDReportsErrorDetails.h
-
-PRIVATEHEADERS = KDReports/KDReportsHeader_p.h \
+    KDReports/KDReportsErrorDetails.h \
+    KDReports/KDReportsHeader_p.h \
     KDReports/KDReportsReport_p.h \
     KDReports/KDReportsXmlParser_p.h \
     KDReports/KDReportsErrorDetails_p.h \
@@ -57,10 +53,7 @@ PRIVATEHEADERS = KDReports/KDReportsHeader_p.h \
     KDReports/KDReportsChartTextObject_p.h \
     KDReports/KDReportsTableLayout_p.h
 
-HEADERS = $$PUBLICHEADERS \
-    $$PRIVATEHEADERS \
-
-SOURCES = KDReports/KDReportsReport.cpp \
+SOURCES += KDReports/KDReportsReport.cpp \
     KDReports/KDReportsElement.cpp \
     KDReports/KDReportsChartElement.cpp \
     KDReports/KDReportsTextElement.cpp \
@@ -96,17 +89,14 @@ SOURCES = KDReports/KDReportsReport.cpp \
     KDReports/KDReportsXmlHelper.cpp
 DEFINES += KDREPORTS_BUILD_KDREPORTS_LIB
 
-target.path = $$INSTALL_PREFIX/lib$$LIB_SUFFIX
-INSTALLS += target
-
 # Translations
 
-LANGUAGES = fr_FR
-TRANSLATIONS = $$join( LANGUAGES, ".ts $${TOP_SOURCE_DIR}/translations/$${TARGET}_", "$${TOP_SOURCE_DIR}/translations/$${TARGET}_", ".ts" )
-#qm.target = $$member( $$list( $$split(TRANSLATIONS) ) )
-qm.target = qm
-qm.depends = $$SOURCES $$HEADERS $$FORMS
-qm.commands = lupdate $$qm.depends -ts $$TRANSLATIONS
+#LANGUAGES = fr_FR
+#TRANSLATIONS = $$join( LANGUAGES, ".ts $${TOP_SOURCE_DIR}/translations/$${TARGET}_", "$${TOP_SOURCE_DIR}/translations/$${TARGET}_", ".ts" )
+##qm.target = $$member( $$list( $$split(TRANSLATIONS) ) )
+#qm.target = qm
+#qm.depends = $$SOURCES $$HEADERS $$FORMS
+#qm.commands = lupdate $$qm.depends -ts $$TRANSLATIONS
 
-QMAKE_EXTRA_TARGETS += qm
-#POST_TARGETDEPS += $$qm.target
+#QMAKE_EXTRA_TARGETS += qm
+##POST_TARGETDEPS += $$qm.target
