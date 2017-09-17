@@ -89,6 +89,9 @@ SOURCES += KDReports/KDReportsReport.cpp \
     KDReports/KDReportsXmlHelper.cpp
 DEFINES += KDREPORTS_BUILD_KDREPORTS_LIB
 
+#cause the dynamic linker to look in the same directory as my Qt application at runtime in Linux
+unix: QMAKE_RPATHDIR += .
+
 # Translations
 
 #LANGUAGES = fr_FR
