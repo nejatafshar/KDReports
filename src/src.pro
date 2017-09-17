@@ -1,4 +1,5 @@
 TEMPLATE = lib
+CONFIG+= static
 
 # Use the filename "kdreportsd1.dll" (or "kdreportsd1.lib") on Windows
 # to avoid name clashes between debug/non-debug versions of the
