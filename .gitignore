@@ -4,6 +4,9 @@
 *.app
 *.user
 *.rej
+*.tmp
+.directory
+*.autosave
 
 moc_*.cpp
 ui_*.h
