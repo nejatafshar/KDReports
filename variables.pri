@@ -17,7 +17,7 @@ macx:QMAKE_SONAME_PREFIX = @rpath
 CONFIG += depend_includepath
 
 contains(TEMPLATE, lib) {
-  DESTDIR = ../../../bin
+  DESTDIR = $$PWD/../../bin
 }
 # Putting all examples in the bin directory makes them easier to run (no PATH needed)
 # but breaks the examples that load from .xml files. We could put them into a .qrc,
@@ -34,7 +34,7 @@ static {
   DEFINES += KDCHART_SHAREDLIB
   contains(TEMPLATE, lib) {
     win32 {
-      DLLDESTDIR = ../../../bin
+      DLLDESTDIR = $$PWD/../../bin
       CONFIG += dll
     }
   }
