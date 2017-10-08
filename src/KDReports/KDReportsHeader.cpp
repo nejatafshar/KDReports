@@ -67,10 +67,14 @@ namespace KDReports {
 QString variableValue( int pageNumber, KDReports::Report* report, VariableType type )
 {
     switch ( type ) {
-    case PageNumber:
-        return QString::number( pageNumber + 1 );
-    case PageCount:
-        return QString::number( report->numberOfPages() );
+    case PageNumber:{
+        QLocale locale;
+        return locale.toString( pageNumber + 1 );
+    }
+    case PageCount:{
+        QLocale locale;
+        return locale.toString( report->numberOfPages() );
+    }
     case TextDate:
         return QDate::currentDate().toString( Qt::TextDate );
     case ISODate:
