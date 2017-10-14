@@ -17,8 +17,15 @@ macx:QMAKE_SONAME_PREFIX = @rpath
 CONFIG += depend_includepath
 
 contains(TEMPLATE, lib) {
-  DESTDIR = $$PWD/../../bin
+  win32:{
+    !contains(QMAKE_TARGET.arch, x86_64) {
+        DESTDIR = $$PWD/../../bin
+    }else{
+        DESTDIR = $$PWD/../../bin64
+    }
+  }
 }
+
 # Putting all examples in the bin directory makes them easier to run (no PATH needed)
 # but breaks the examples that load from .xml files. We could put them into a .qrc,
 # but then people trying the binary version of kdreports wouldn't be able to edit the .xml
@@ -34,7 +41,11 @@ static {
   DEFINES += KDCHART_SHAREDLIB
   contains(TEMPLATE, lib) {
     win32 {
-      DLLDESTDIR = $$PWD/../../bin
+      !contains(QMAKE_TARGET.arch, x86_64) {
+          DLLDESTDIR = $$PWD/../../bin
+      }else{
+          DLLDESTDIR = $$PWD/../../bin64
+      }
       CONFIG += dll
     }
   }
