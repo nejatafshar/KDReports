@@ -40,6 +40,7 @@
 #include "KDReportsReportBuilder_p.h"
 #include <QMap>
 #include <QHash>
+#include <QLocale>
 
 namespace KDReports
 {
@@ -138,6 +139,7 @@ public:
     QImage m_watermarkImage;
     int m_firstPageNumber;
     bool m_pageContentSizeDirty;
+    QLocale locale;
 
     //int m_numHorizontalPages; // for scaleTo() and setTableBreakingEnabled(). 1 if not set.
     //int m_numVerticalPages;   // for scaleTo(). 0 if not set.

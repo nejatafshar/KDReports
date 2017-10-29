@@ -493,6 +493,16 @@ KDReports::Report::~Report()
     delete d;
 }
 
+void KDReports::Report::setLocale(const QLocale &locale)
+{
+    d->locale = locale;
+}
+
+QLocale KDReports::Report::locale()
+{
+    return d->locale;
+}
+
 void KDReports::Report::addInlineElement( const Element& element )
 {
     if (d->m_reportMode != WordProcessing) {

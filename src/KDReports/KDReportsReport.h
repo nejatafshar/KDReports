@@ -120,6 +120,9 @@ public:
      */
     ~Report();
 
+    void setLocale(const QLocale &locale);
+    QLocale locale();
+
     enum ReportMode {
         WordProcessing = 0,
         SpreadSheet = 1
