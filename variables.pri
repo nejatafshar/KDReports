@@ -18,10 +18,12 @@ CONFIG += depend_includepath
 
 contains(TEMPLATE, lib) {
   win32:{
-    !contains(QMAKE_TARGET.arch, x86_64) {
-        DESTDIR = $$PWD/../../bin
+    contains(QT_ARCH, i386): {
+        CONFIG(release, debug|release): DESTDIR = $$PWD/../../bin/32
+        else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../debug/32
     }else{
-        DESTDIR = $$PWD/../../bin64
+        CONFIG(release, debug|release): DESTDIR = $$PWD/../../bin/64
+        else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../debug/64
     }
   }
 }
