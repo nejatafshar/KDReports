@@ -1,6 +1,8 @@
 TEMPLATE = lib
 CONFIG+= static
 
+CONFIG += c++17
+
 # Use the filename "kdreportsd1.dll" (or "kdreportsd1.lib") on Windows
 # to avoid name clashes between debug/non-debug versions of the
 # KD Reports library:
