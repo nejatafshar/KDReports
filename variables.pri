@@ -17,15 +17,8 @@ macx:QMAKE_SONAME_PREFIX = @rpath
 CONFIG += depend_includepath
 
 contains(TEMPLATE, lib) {
-  win32:{
-    contains(QT_ARCH, i386): {
-        CONFIG(release, debug|release): DESTDIR = $$PWD/../../bin/32
-        else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../debug/32
-    }else{
-        CONFIG(release, debug|release): DESTDIR = $$PWD/../../bin/64
-        else:CONFIG(debug, debug|release): DESTDIR = $$PWD/../../debug/64
-    }
-  }
+    CONFIG(release, debug|release): DESTDIR = $$PWD/bin
+    else:CONFIG(debug, debug|release): DESTDIR = $$PWD/debug
 }
 
 # Putting all examples in the bin directory makes them easier to run (no PATH needed)
