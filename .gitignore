@@ -26,6 +26,7 @@ configure.sh
 configure.bat
 
 bin/
+debug/
 lib/
 include/
 unittests/ElementCopying/ElementCopying
