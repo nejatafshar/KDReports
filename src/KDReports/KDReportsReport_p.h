@@ -118,6 +118,8 @@ public:
     void debugLayoutToPdf( const char* fileName );
 #endif
 
+    QImage waterMarkForPage( int pageNumber, int pageCount ) const;
+
     qreal m_layoutWidth; // in pixels; used for layoutAsOnePage only
     qreal m_endlessPrinterWidth; // in mm
     mutable QSizeF m_paperSize; // in pixels
@@ -136,7 +138,7 @@ public:
     int m_watermarkRotation;
     QColor m_watermarkColor;
     QFont m_watermarkFont;
-    QImage m_watermarkImage;
+    QMap<HeaderLocation,QImage> m_watermarkImages;
     int m_firstPageNumber;
     bool m_pageContentSizeDirty;
     QLocale locale;

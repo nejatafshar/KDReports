@@ -65,7 +65,7 @@ KDReports::ReportPrivate::ReportPrivate( Report* report )
       m_watermarkRotation( 0 ),
       m_watermarkColor( QColor( 204, 204, 204 ) ),
       m_watermarkFont( QFont( QLatin1String( "Helvetica" ), 48 ) ),
-      m_watermarkImage(),
+      m_watermarkImages(),
 #if 0
       m_numHorizontalPages( 1 ),
       m_numVerticalPages( 0 ),
@@ -333,17 +333,19 @@ void KDReports::ReportPrivate::paintPage( int pageNumber, QPainter& painter )
         painter.restore();
     }
 
-    if( !m_watermarkImage.isNull() ) {
+    auto image = waterMarkForPage(pageNumber, pageCount);
+
+    if( !image.isNull() ) {
         // We paint it without scaling it, for better quality.
         // But this means the actual size depends on the zoom level or printer resolution...
         //
         // It also means the image could end up being bigger than the page, and we don't want that.
         // So we scale down if necessary. But never up.
-        QImage img = m_watermarkImage;
-        if ( m_watermarkImage.width() > textDocRect.width() ||
-             m_watermarkImage.height() > textDocRect.height() ) {
+        QImage img = image;
+        if ( image.width() > textDocRect.width() ||
+             image.height() > textDocRect.height() ) {
             // should probably be cached?
-            img = m_watermarkImage.scaled( m_paperSize.toSize(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
+            img = image.scaled( m_paperSize.toSize(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
         }
         const QRect imageRect = QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, img.size(), textDocRect );
         //qDebug() << "textDocRect=" << textDocRect << "size=" << img.size() << "-> imageRect=" << imageRect;
@@ -459,6 +461,18 @@ void KDReports::ReportPrivate::debugLayoutToPdf( const char* fileName )
     m_pageContentSizeDirty = oldLayoutDirty;
 }
 #endif
+
+QImage KDReports::ReportPrivate::waterMarkForPage(int pageNumber, int pageCount) const
+{
+    if ( pageNumber == 0 && m_watermarkImages.contains(HeaderLocation::FirstPage) )
+        return m_watermarkImages.value(HeaderLocation::FirstPage);
+    if ( pageNumber == pageCount && m_watermarkImages.contains(HeaderLocation::LastPage) )
+        return m_watermarkImages.value(HeaderLocation::LastPage);
+    if ( pageNumber & 1 ) // odd
+        return m_watermarkImages.value(HeaderLocation::OddPages);
+    else // even
+        return m_watermarkImages.value(HeaderLocation::EvenPages);
+}
 
 typedef QMap<QString,QAbstractItemModel*> ModelMap;
 Q_GLOBAL_STATIC( ModelMap, globalModelMap )
@@ -903,7 +917,7 @@ QFont KDReports::Report::watermarkFont() const
     return d->m_watermarkFont;
 }
 
-void KDReports::Report::setWatermarkPixmap( const QPixmap& pixmap, bool autoGrayOut )
+void KDReports::Report::setWatermarkPixmap(KDReports::HeaderLocation hl,  const QPixmap& pixmap, bool autoGrayOut )
 {
     QPixmap pix( pixmap );
     if( autoGrayOut ) {
@@ -911,22 +925,22 @@ void KDReports::Report::setWatermarkPixmap( const QPixmap& pixmap, bool autoGray
         opt.palette = QApplication::palette();
         pix = qApp->style()->generatedIconPixmap( QIcon::Disabled, pixmap, &opt );
     }
-    setWatermarkImage( pix.toImage() );
+    setWatermarkImage( hl, pix.toImage() );
 }
 
-QPixmap KDReports::Report::watermarkPixmap() const
+QPixmap KDReports::Report::watermarkPixmap(KDReports::HeaderLocation hl) const
 {
-    return QPixmap::fromImage( d->m_watermarkImage );
+    return QPixmap::fromImage( watermarkImage(hl) );
 }
 
-void KDReports::Report::setWatermarkImage( const QImage& image )
+void KDReports::Report::setWatermarkImage(KDReports::HeaderLocation hl, const QImage& image )
 {
-    d->m_watermarkImage = image;
+    d->m_watermarkImages.insert(hl, image);
 }
 
-QImage KDReports::Report::watermarkImage() const
+QImage KDReports::Report::watermarkImage(HeaderLocation hl) const
 {
-    return d->m_watermarkImage;
+    return d->m_watermarkImages.value(hl);
 }
 
 void KDReports::Report::addPageBreak()

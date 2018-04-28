@@ -773,26 +773,26 @@ public:
      * You can set both a watermark text and a watermark image, but
      * the two will overwrite each other so this is not recommended.
      */
-    void setWatermarkPixmap( const QPixmap& pixmap, bool autoGrayOut = true );
+    void setWatermarkPixmap(KDReports::HeaderLocation hl, const QPixmap& pixmap, bool autoGrayOut = true );
 
     /**
      * \return the image to be used as watermark. If autoGrayOut was
      * used when calling \a setWatermarkPixmap, this is not the same
      * pixmap as was passed to setWatermarkPixmap.
      */
-    QPixmap watermarkPixmap() const;
+    QPixmap watermarkPixmap(KDReports::HeaderLocation) const;
 
     /**
      * Same as setWatermarkPixmap but with a QImage. Especially useful in threads.
      * \since 1.2
      */
-    void setWatermarkImage( const QImage& image );
+    void setWatermarkImage(HeaderLocation hl, const QImage& image );
 
     /**
      * \return the image to be used as watermark.
      * \since 1.2
      */
-    QImage watermarkImage() const;
+    QImage watermarkImage(KDReports::HeaderLocation hl) const;
 
     /**
      * \return the location for the given header.
