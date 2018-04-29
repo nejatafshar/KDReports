@@ -345,7 +345,7 @@ void KDReports::ReportPrivate::paintPage( int pageNumber, QPainter& painter )
         if ( image.width() > textDocRect.width() ||
              image.height() > textDocRect.height() ) {
             // should probably be cached?
-            img = image.scaled( m_paperSize.toSize(), Qt::KeepAspectRatio, Qt::SmoothTransformation );
+            img = image.scaled(m_paperSize.toSize(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation );
         }
         const QRect imageRect = QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, img.size(), textDocRect );
         //qDebug() << "textDocRect=" << textDocRect << "size=" << img.size() << "-> imageRect=" << imageRect;
