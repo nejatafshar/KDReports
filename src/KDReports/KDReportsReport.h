@@ -786,7 +786,7 @@ public:
      * Same as setWatermarkPixmap but with a QImage. Especially useful in threads.
      * \since 1.2
      */
-    void setWatermarkImage(HeaderLocation hl, const QImage& image );
+    void setWatermarkImage(KDReports::HeaderLocation hl, const QImage& image );
 
     /**
      * \return the image to be used as watermark.

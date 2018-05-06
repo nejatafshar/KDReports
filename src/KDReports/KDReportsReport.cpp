@@ -938,7 +938,7 @@ void KDReports::Report::setWatermarkImage(KDReports::HeaderLocation hl, const QI
     d->m_watermarkImages.insert(hl, image);
 }
 
-QImage KDReports::Report::watermarkImage(HeaderLocation hl) const
+QImage KDReports::Report::watermarkImage(KDReports::HeaderLocation hl) const
 {
     return d->m_watermarkImages.value(hl);
 }
