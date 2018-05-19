@@ -138,7 +138,7 @@ public:
     int m_watermarkRotation;
     QColor m_watermarkColor;
     QFont m_watermarkFont;
-    QMap<HeaderLocation,QImage> m_watermarkImages;
+    QMap<HeaderLocations,QImage> m_watermarkImages;
     int m_firstPageNumber;
     bool m_pageContentSizeDirty;
     QLocale locale;

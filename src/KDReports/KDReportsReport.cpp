@@ -917,7 +917,7 @@ QFont KDReports::Report::watermarkFont() const
     return d->m_watermarkFont;
 }
 
-void KDReports::Report::setWatermarkPixmap(KDReports::HeaderLocation hl,  const QPixmap& pixmap, bool autoGrayOut )
+void KDReports::Report::setWatermarkPixmap(KDReports::HeaderLocations hl,  const QPixmap& pixmap, bool autoGrayOut )
 {
     QPixmap pix( pixmap );
     if( autoGrayOut ) {
@@ -928,17 +928,17 @@ void KDReports::Report::setWatermarkPixmap(KDReports::HeaderLocation hl,  const 
     setWatermarkImage( hl, pix.toImage() );
 }
 
-QPixmap KDReports::Report::watermarkPixmap(KDReports::HeaderLocation hl) const
+QPixmap KDReports::Report::watermarkPixmap(KDReports::HeaderLocations hl) const
 {
     return QPixmap::fromImage( watermarkImage(hl) );
 }
 
-void KDReports::Report::setWatermarkImage(KDReports::HeaderLocation hl, const QImage& image )
+void KDReports::Report::setWatermarkImage(KDReports::HeaderLocations hl, const QImage& image )
 {
     d->m_watermarkImages.insert(hl, image);
 }
 
-QImage KDReports::Report::watermarkImage(KDReports::HeaderLocation hl) const
+QImage KDReports::Report::watermarkImage(KDReports::HeaderLocations hl) const
 {
     return d->m_watermarkImages.value(hl);
 }
