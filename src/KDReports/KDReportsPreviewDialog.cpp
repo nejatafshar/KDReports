@@ -183,12 +183,14 @@ void KDReports::PreviewDialogPrivate::_kd_slotSave()
         }
     }
     if ( !file.isEmpty() ) {
-        QPrinter printer;
-        report->setupPrinter( &printer );
-        printer.setOutputFormat( QPrinter::PdfFormat );
-        printer.setOutputFileName( file );
+
+//        QPrinter printer;
+//        report->setupPrinter( &printer );
+//        printer.setOutputFormat( QPrinter::PdfFormat );
+//        printer.setOutputFileName( file );
+//        report->print( &printer, q );
         m_savedFileName = file;
-        report->print( &printer, q );
+        report->exportToFile(file);
         if ( QFile::exists(file) ) {
             q->setResult( KDReports::PreviewDialog::SavedSuccessfully );
         } else {
