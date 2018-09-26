@@ -204,9 +204,11 @@ void KDReports::PreviewWidgetPrivate::_kd_previewNextItems()
 
 QPixmap KDReports::PreviewWidgetPrivate::paintPreview( int index )
 {
+    auto sw = 8 - m_zoomFactor;
+    auto sh = 4;
     const QSizeF paperSize = m_report->paperSize();
-    const int width = qCeil( paperSize.width() * m_zoomFactor );
-    const int height = qCeil( paperSize.height() * m_zoomFactor );
+    const int width = qCeil( paperSize.width() * m_zoomFactor*sw );
+    const int height = qCeil( paperSize.height() * m_zoomFactor*sh );
 
     QPixmap pixmap( width, height );
     //qDebug() << width << "," << height;
@@ -216,13 +218,15 @@ QPixmap KDReports::PreviewWidgetPrivate::paintPreview( int index )
     QPainter painter( &pixmap );
     painter.setRenderHint( QPainter::Antialiasing );
     painter.setRenderHint( QPainter::SmoothPixmapTransform );
+    painter.setRenderHint( QPainter::TextAntialiasing );
+    painter.setRenderHint( QPainter::HighQualityAntialiasing );
     painter.fillRect( QRectF(0, 0, width, height), QBrush(Qt::white) );
-    painter.scale( m_zoomFactor, m_zoomFactor );
+    painter.scale( m_zoomFactor*sw, m_zoomFactor*sh );
     m_report->paintPage( index, painter );
     painter.setPen( QPen(1) );
     painter.drawRect( QRectF( 0, 0, paperSize.width(), paperSize.height() ) );
 
-    return pixmap;
+    return pixmap.scaled(width/sw, height/sh, Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
 }
 
 void KDReports::PreviewWidgetPrivate::printSelectedPages()
