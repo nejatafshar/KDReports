@@ -169,7 +169,8 @@ void KDReports::PreviewWidgetPrivate::paintItem( QListWidgetItem *item, int inde
 
     // Use a QImage so that the raster paint engine is used.
     // Gives a 7.7 times speedup (!) compared to X11.
-    QImage img( PreviewSize, PreviewSize, QImage::Format_ARGB32_Premultiplied );
+    auto s = 10;
+    QImage img( PreviewSize*s, PreviewSize*s, QImage::Format_ARGB32_Premultiplied );
     const QSizeF paperSize = m_report->paperSize();
     const qreal longestSide = qMax(paperSize.width(),
                                    paperSize.height());
@@ -187,7 +188,7 @@ void KDReports::PreviewWidgetPrivate::paintItem( QListWidgetItem *item, int inde
     painter.setPen( QPen(1) );
     painter.drawRect( QRectF( 0, 0, paperSize.width(), paperSize.height() ) );
 
-    item->setIcon( QIcon(QPixmap::fromImage(img)) );
+    item->setIcon( QIcon(QPixmap::fromImage(img.scaledToWidth(PreviewSize, Qt::SmoothTransformation))) );
 }
 
 void KDReports::PreviewWidgetPrivate::_kd_previewNextItems()
