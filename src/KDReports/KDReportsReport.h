@@ -853,6 +853,9 @@ public:
      */
     void endEdit();
 
+    QHash<QString, QString> textValues();
+    QHash<QString, QImage> imageValues();
+
 private:
     friend class Test;
     friend class ::ReportData;

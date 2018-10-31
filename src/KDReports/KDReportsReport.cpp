@@ -886,6 +886,16 @@ void KDReports::Report::endEdit()
     d->builder()->contentDocumentCursor().endEditBlock();
 }
 
+QHash<QString, QString> KDReports::Report::textValues()
+{
+    return d->m_textValues;
+}
+
+QHash<QString, QImage> KDReports::Report::imageValues()
+{
+    return d->m_imageValues;
+}
+
 void KDReports::Report::setWatermarkText( const QString& text,
                                           int rotation,
                                           const QColor& color,
