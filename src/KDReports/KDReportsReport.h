@@ -853,8 +853,6 @@ public:
      */
     void endEdit();
 
-    void clearLoadedElements();
-
 private:
     friend class Test;
     friend class ::ReportData;
