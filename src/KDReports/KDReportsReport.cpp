@@ -886,6 +886,15 @@ void KDReports::Report::endEdit()
     d->builder()->contentDocumentCursor().endEditBlock();
 }
 
+void KDReports::Report::clearLoadedElements()
+{
+    d->builder()->contentDocumentData().document().clear();
+    for(const auto& k: d->m_headers.keys())
+        d->m_headers[k]->doc().contentDocument().clear();
+    for(const auto& k: d->m_footers.keys())
+        d->m_footers[k]->doc().contentDocument().clear();
+}
+
 void KDReports::Report::setWatermarkText( const QString& text,
                                           int rotation,
                                           const QColor& color,
