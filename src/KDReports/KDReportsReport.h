@@ -563,7 +563,7 @@ public:
      * \param fileName the name of the image file
      * \param format format of the image, for instance: BMP, JPG, PNG.
      */
-    bool exportToImage( const QSize& size, const QString& fileName, const char* format );
+    bool exportToImage( const QSize& size, const QString& fileName, const char* format , int pageNumber = 0);
 
     /**
      * Export the whole report to HTML.

@@ -763,7 +763,7 @@ bool KDReports::Report::exportToHtml( const QString& fileName )
     return false;
 }
 
-bool KDReports::Report::exportToImage( const QSize& size, const QString& fileName, const char* format )
+bool KDReports::Report::exportToImage(const QSize& size, const QString& fileName, const char* format , int pageNumber)
 {
     // Get the document to fit into one page
 
@@ -785,7 +785,7 @@ bool KDReports::Report::exportToImage( const QSize& size, const QString& fileNam
     painter.setRenderHint( QPainter::SmoothPixmapTransform );
     painter.fillRect( QRectF(0, 0, size.width(), size.height()), QBrush(Qt::white) );
     painter.scale( zoomFactor, zoomFactor );
-    d->paintPage( 0, painter );
+    d->paintPage(pageNumber, painter );
 
     // restore textdoc size and header widths
     d->m_layoutWidth = saveLayoutWidth;
