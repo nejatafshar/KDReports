@@ -769,8 +769,8 @@ bool KDReports::Report::exportToImage( const QSize& size, const QString& fileNam
 
     QPrinter::PageSize savePageSize = pageSize();
     const qreal saveLayoutWidth = d->m_layoutWidth;
-    d->m_layoutWidth = d->m_layout->idealWidth() + mmToPixels(d->m_marginLeft + d->m_marginRight);
-    d->m_pageContentSizeDirty = true;
+    //d->m_layoutWidth = d->m_layout->idealWidth() + mmToPixels(d->m_marginLeft + d->m_marginRight);
+    //d->m_pageContentSizeDirty = true;
     d->ensureLayouted();
 
     const qreal zoomFactor = qMin( (qreal)size.width() / d->m_paperSize.width(),
