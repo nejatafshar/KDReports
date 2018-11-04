@@ -58,6 +58,7 @@ public:
     QString m_defaultSaveDirectory;
     QString m_savedFileName;
     bool m_dirBrowsingEnabled;
+    QString m_saveFileFormat;
 };
 
 KDReports::PreviewDialog::PreviewDialog( KDReports::Report* report, QWidget *parent )
@@ -121,6 +122,11 @@ void KDReports::PreviewDialog::setDirectoryBrowsingEnabled(bool allowed)
     d->m_dirBrowsingEnabled = allowed;
 }
 
+void KDReports::PreviewDialog::setSaveFileFormat(const QString &format)
+{
+    d->m_saveFileFormat = format;
+}
+
 bool KDReports::PreviewDialog::showTableSettingsDialog( KDReports::Report* report )
 {
     KDReports::TableBreakingSettingsDialog dialog( report );
@@ -158,7 +164,10 @@ void KDReports::PreviewDialogPrivate::_kd_slotSave()
     KDReports::Report *report = m_previewWidget->report();
     QString file;
     if (m_dirBrowsingEnabled) {
-        file = QFileDialog::getSaveFileName(q, q->tr("Save Report as PDF"), m_defaultSaveDirectory, q->tr("PDF Files (*.pdf)"));
+        if(m_saveFileFormat.toLower()==QLatin1String("png"))
+            file = QFileDialog::getSaveFileName(q, q->tr("Save Report as Image"), m_defaultSaveDirectory, q->tr("Image Files (*.png)"));
+        else
+            file = QFileDialog::getSaveFileName(q, q->tr("Save Report as PDF"), m_defaultSaveDirectory, q->tr("PDF Files (*.pdf)"));
     } else {
         bool ok;
         Q_FOREVER {
@@ -190,7 +199,10 @@ void KDReports::PreviewDialogPrivate::_kd_slotSave()
 //        printer.setOutputFileName( file );
 //        report->print( &printer, q );
         m_savedFileName = file;
-        report->exportToFile(file);
+        if(m_saveFileFormat.toLower()==QLatin1String("png"))
+            report->exportToImage(report->paperSize().toSize(), file, "png");
+        else
+            report->exportToFile(file);
         if ( QFile::exists(file) ) {
             q->setResult( KDReports::PreviewDialog::SavedSuccessfully );
         } else {

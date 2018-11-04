@@ -75,6 +75,8 @@ public:
      */
     void setDirectoryBrowsingEnabled( bool allowed );
 
+    void setSaveFileFormat(const QString& format );
+
     /**
      * Return true if the page has been selected (checked) by the user.
      */
