@@ -164,8 +164,8 @@ void KDReports::PreviewDialogPrivate::_kd_slotSave()
     KDReports::Report *report = m_previewWidget->report();
     QString file;
     if (m_dirBrowsingEnabled) {
-        if(m_saveFileFormat.toLower()==QLatin1String("png"))
-            file = QFileDialog::getSaveFileName(q, q->tr("Save Report as Image"), m_defaultSaveDirectory, q->tr("Image Files (*.png)"));
+        if(m_saveFileFormat.toLower()==QLatin1String("image"))
+            file = QFileDialog::getSaveFileName(q, q->tr("Save Report as Image"), m_defaultSaveDirectory, q->tr("JPG (*.jpg );; PNG (*.png )"));
         else
             file = QFileDialog::getSaveFileName(q, q->tr("Save Report as PDF"), m_defaultSaveDirectory, q->tr("PDF Files (*.pdf)"));
     } else {
@@ -199,8 +199,8 @@ void KDReports::PreviewDialogPrivate::_kd_slotSave()
 //        printer.setOutputFileName( file );
 //        report->print( &printer, q );
         m_savedFileName = file;
-        if(m_saveFileFormat.toLower()==QLatin1String("png"))
-            report->exportToImage(report->paperSize().toSize(), file, "png");
+        if(m_saveFileFormat.toLower()==QLatin1String("image"))
+            report->exportToImage(report->paperSize().toSize(), file, QFileInfo(m_savedFileName).suffix().toLatin1());
         else
             report->exportToFile(file);
         if ( QFile::exists(file) ) {
