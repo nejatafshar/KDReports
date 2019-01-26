@@ -896,6 +896,11 @@ QHash<QString, QImage> KDReports::Report::imageValues()
     return d->m_imageValues;
 }
 
+QTextDocument &KDReports::Report::textDocument() const
+{
+    return doc().contentDocumentData().document();
+}
+
 void KDReports::Report::setWatermarkText( const QString& text,
                                           int rotation,
                                           const QColor& color,

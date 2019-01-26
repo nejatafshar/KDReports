@@ -856,6 +856,8 @@ public:
     QHash<QString, QString> textValues();
     QHash<QString, QImage> imageValues();
 
+    QTextDocument& textDocument() const;
+
 private:
     friend class Test;
     friend class ::ReportData;
