@@ -341,15 +341,14 @@ void KDReports::ReportPrivate::paintPage( int pageNumber, QPainter& painter )
         //
         // It also means the image could end up being bigger than the page, and we don't want that.
         // So we scale down if necessary. But never up.
-        QImage img = image;
-        if ( image.width() > textDocRect.width() ||
-             image.height() > textDocRect.height() ) {
+        if ( image.width() > m_paperSize.width() ||
+             image.height() > m_paperSize.height() ) {
             // should probably be cached?
-            img = image.scaled(m_paperSize.toSize(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation );
+            image = image.scaled(m_paperSize.toSize(), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation );
         }
-        const QRect imageRect = QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, img.size(), textDocRect );
+        const QRect imageRect = QStyle::alignedRect( Qt::LeftToRight, Qt::AlignCenter, image.size(), textDocRect );
         //qDebug() << "textDocRect=" << textDocRect << "size=" << img.size() << "-> imageRect=" << imageRect;
-        painter.drawImage( imageRect.topLeft(), img );
+        painter.drawImage( imageRect.topLeft(), image );
     }
 
 
