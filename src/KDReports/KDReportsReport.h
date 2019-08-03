@@ -118,7 +118,7 @@ public:
     /**
      * Destroys the report.
      */
-    ~Report();
+    ~Report() override;
 
     void setLocale(const QLocale &locale);
     QLocale locale();
