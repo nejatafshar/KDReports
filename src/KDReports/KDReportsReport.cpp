@@ -409,7 +409,11 @@ bool KDReports::ReportPrivate::doPrint( QPrinter* printer, QWidget* parent )
         dialog = new QProgressDialog( QObject::tr( "Printing" ), QObject::tr( "Cancel" ), 0, pageCount, parent );
         dialog->setWindowModality( Qt::ApplicationModal );
     }
-    QPainter painter( printer );
+    QPainter painter;
+    if (!painter.begin(printer)) {
+        qWarning() << "QPainter failed to initialize on the given printer";
+        return false;
+    }
 
     int fromPage = 0;
     int toPage = pageCount;
@@ -779,7 +783,11 @@ bool KDReports::Report::exportToImage(const QSize& size, const QString& fileName
     QImage image( size, QImage::Format_ARGB32_Premultiplied );
     image.fill( Qt::white );
 
-    QPainter painter( &image );
+    QPainter painter;
+    if (!painter.begin(&image)) {
+        qWarning() << "QPainter failed to initialize on the given image of size" << size;
+        return false;
+    }
     painter.setRenderHint( QPainter::Antialiasing );
     painter.setRenderHint( QPainter::SmoothPixmapTransform );
     painter.fillRect( QRectF(0, 0, size.width(), size.height()), QBrush(Qt::white) );
