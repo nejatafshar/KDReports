@@ -81,19 +81,18 @@ void FontScaler::setFactorForHeight( qreal wantedHeight )
     Q_ASSERT( wantedHeight > 0 );
     qreal height = m_fontMetrics.height();
     int iterations = 0;
-    qreal prevHeight = height;
 
     while ( height > wantedHeight && height > 3.0 /* seems to be the min we can get */ ) {
         const qreal factor = wantedHeight / height;
         applyAdditionalScalingFactor( factor );
-        prevHeight = height;
+        qreal prevHeight = height;
         height = m_fontMetrics.height();
 #ifdef DEBUG_LAYOUT
         qDebug() << " FontScaler: height=" << height << factor << m_scalingFactor;
 #endif
         if ( ++iterations > 10 && height == prevHeight ) {
             // We're not getting anywhere, probably we're hitting a minimum width when
-            // trying to use a very very small font (see unittest testFontScalerVerySmall)
+            // trying to use a very, very small font (see unittest testFontScalerVerySmall)
             break;
         }
         if ( m_font.pixelSize() == 1 ) {
@@ -118,19 +117,18 @@ void FontScaler::setFactorForWidth( qreal wantedFactor, const QString& sampleTex
 #endif
 
     int iterations = 0;
-    qreal prevWidth = width;
 
     while ( width > wantedWidth ) {
         qreal factor = wantedWidth / width;
         applyAdditionalScalingFactor( factor );
-        prevWidth = width;
+        qreal prevWidth = width;
         width = m_fontMetrics.width( sampleText );
 #ifdef DEBUG_LAYOUT
         qDebug() << "  FontScaler: width=" << width << "factor=" << factor << "m_scalingFactor=" << m_scalingFactor;
 #endif
         if ( ++iterations > 10 && width == prevWidth ) {
             // We're not getting anywhere, probably we're hitting a minimum width when
-            // trying to use a very very small font (see unittest testFontScalerVerySmall)
+            // trying to use a very, very small font (see unittest testFontScalerVerySmall)
             break;
         }
     }

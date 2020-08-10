@@ -74,8 +74,8 @@ class XmlElementHandler;
  *  Reports can be created programmatically, using an easy to use C++ API, or they can be data-driven,
  *  creating reports from XML or SQL data sources complete with watermarks, headers and footers. Reports can be previewed
  *  manually, sent directly to a printer, or saved as
- *  PDF files. Additionally, using <a href="https://www.kdab.com">KDAB's</a> <a href="https://www.kdab.com/?page=products&sub=kdchart">KD Chart</a> package together with KD Reports allows reports
- *  to be garnished with the myriad of chart types supported by <a href="https://www.kdab.com/?page=products&sub=kdchart">KD Chart</a>.
+ *  PDF files. Additionally, using <a href="https://www.kdab.com">KDAB's</a> <a href="https://www.kdab.com/products/kd-chart">KD Chart</a> package together with KD Reports allows reports
+ *  to be garnished with the myriad of chart types supported by <a href="https://www.kdab.com/products/kd-chart">KD Chart</a>.
  *
  *  KD Reports targets C++ programmers who use Qt in their
  *  applications. The following reference assumes familiarity with
@@ -561,9 +561,9 @@ public:
 
     /**
      * Export the whole report to an image file.
-     * \param size size of the image in pixels
+     * \param size the size of the image in pixels
      * \param fileName the name of the image file
-     * \param format format of the image, for instance: BMP, JPG, PNG.
+     * \param format the format of the image, for instance: BMP, JPG, PNG.
      */
     bool exportToImage( const QSize& size, const QString& fileName, const char* format , int pageNumber = 0);
 
